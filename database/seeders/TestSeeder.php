@@ -9,7 +9,6 @@ class TestSeeder extends Seeder
 
     public function run()
     {
-        \App\Models\Test::factory(500)->create();
-
+        \App\Models\Test::factory(5)->create();
     }
 }

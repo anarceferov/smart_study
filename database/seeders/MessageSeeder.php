@@ -9,7 +9,7 @@ class MessageSeeder extends Seeder
 
     public function run()
     {
-        \App\Models\Message::factory(15)->create();
+        \App\Models\Message::factory(5)->create();
 
     }
 }

@@ -13,14 +13,14 @@ class Blogs extends Migration
             $table->id();
             $table->string('blog_image');
             $table->string('title');
-            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->longText('content');
             $table->string('slug');
             $table->enum('status' , ['publish' , 'pendding' , 'check'])->default('check');
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 
         });
     }

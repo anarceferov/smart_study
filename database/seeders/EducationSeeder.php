@@ -13,7 +13,7 @@ class EducationSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Education::factory(15)->create();
+        \App\Models\Education::factory(5)->create();
 
     }
 }

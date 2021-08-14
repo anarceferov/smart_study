@@ -25,8 +25,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="">Name :</label>
-                        <input type="text" name="name" id="" class="form-control" autofocus value="{{old('name')}}"
-                            required>
+                        <input type="text" name="name" id="" class="form-control" autofocus value="{{old('name')}}" required>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="">Email :</label>
@@ -46,8 +45,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="">Birth Date :</label>
-                        <input type="date" name="date_birth" id="" class="form-control" value="{{old('date_birth')}}"
-                            required>
+                        <input type="date" name="date_birth" id="" class="form-control" value="{{old('date_birth')}}" required>
                     </div>
 
                     <div class="form-group col-md-4">
@@ -60,26 +58,16 @@
                     <div class="form-group col-md-6">
                         <label for="">Password :</label>
                         <input type="password" name="password" class="form-control" id="" required>
-                    </div> 
+                    </div>
                     <div class="form-group col-md-6">
                         <label for="">Confirm Password :</label>
                         <input type="password" name="password_confirmation" class="form-control" required>
                     </div>
                 </div>
-                <input type="checkbox" onclick="myFunction()">    Show Password
+                <input type="checkbox" onclick="myFunction()"> Show Password
 
                 <hr>
 
-                <div class="form-group">
-                    <label for="">Type :</label>
-                    <select class="custom-select" multiple size="3" name="status" required>
-                        <option value="admin" @if(old('status')=="admin" ) selected @endif>Admin</option>
-                        <option value="super_user" @if(old('status')=="super_user" ) selected @endif>Super User
-                        </option>
-                        <option value="user" @if(old('status')=="user" ) selected @endif>User</option>
-                    </select>
-                </div>
-                <hr>
                 <div class="form-row">
                     <div class="form-group mt-4 col-md-6">
                         <label for="">CV :</label>
@@ -89,6 +77,23 @@
                         <label for="">Image :</label>
                         <input type="file" name="image" id="" required>
                     </div>
+                </div>
+                <hr>
+
+                <div class="form-group">
+                    <h3 class="text-center  badge-danger badge-pill"> Permissions</h3>
+                </div>
+
+                <div class="form-group">
+                    <a href="" class="btn btn-secondary btn-sm">Select ALL</a>
+                </div>
+                
+                <div class="form-check">
+                    @foreach($permission as $value)
+                    <input type="checkbox" value="{{$value->name}}" class="form-check-input" id="{{ $value->id }}" name="permission[]">
+                    <label class="form-check-label" for="{{ $value->id }}"> {{ $value->name }} </label>
+                    <br>
+                    @endforeach
                 </div>
 
                 <hr>
@@ -105,14 +110,31 @@
 
 @endsection
 @section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+
 <script>
     function myFunction() {
-      var x = document.getElementsById("password");
-      if (x.type === "password") {
-        x.type = "text";
-      } else {
-        x.type = "password";
-      }
+        var x = document.getElementsById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
     }
-    </script>
+</script>
+
+<script>
+    $('.btn-secondary').click(function(e) {
+        e.preventDefault()
+        $('.form-check-input').prop('checked', true);
+    })
+</script>
+@endsection
+
+@section('css')
+<style>
+    hr {
+        border: 1px solid black;
+    }
+</style>
 @endsection

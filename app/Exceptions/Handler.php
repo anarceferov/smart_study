@@ -34,8 +34,14 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+
+        $this->renderable(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
+            return response()->view('back.role.error');
+        });
+
         $this->reportable(function (Throwable $e) {
             //
         });
+
     }
 }

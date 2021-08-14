@@ -5,17 +5,22 @@ namespace App\Http\Controllers\Back;
 use App\Http\Requests\ServiceCreateRequest;
 use App\Http\Requests\ServiceUpdateRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Service;
 
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    function __construct()
+    {
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        $this->middleware('permission:service-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:service-create'  , ['only' => ['create']]);
+        $this->middleware('permission:service-store'   , ['only' => ['store']]);
+        $this->middleware('permission:service-edit'    , ['only' => ['edit']]);
+        $this->middleware('permission:service-update'  , ['only' => ['update']]);
+        $this->middleware('permission:service-destroy' , ['only' => ['destroy']]);
+    }
+    
     public function index()
     {
         $services = service::orderBy('created_at' , 'desc')->get();

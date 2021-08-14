@@ -8,6 +8,7 @@ use App\Http\Controllers\Back\BlogController;
 use App\Http\Controllers\Back\CountryController;
 use App\Http\Controllers\Back\CourseController;
 use App\Http\Controllers\Back\EducationController;
+use App\Http\Controllers\Back\RoleController;
 use App\Http\Controllers\Back\ServiceController;
 use App\Http\Controllers\Back\SuccessController;
 use App\Http\Controllers\Back\TestController;
@@ -38,5 +39,6 @@ Route::prefix('admin/')->middleware('isAdmin')->group(function () {
     Route::resource('educations', EducationController::class);
     Route::resource('services', ServiceController::class);
     Route::resource('successes', SuccessController::class);
+    Route::resource('roles', RoleController::class);
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });

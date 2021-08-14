@@ -10,11 +10,16 @@ use App\Models\Success;
 
 class SuccessController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    function __construct()
+    {
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        $this->middleware('permission:success-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:success-create'  , ['only' => ['create']]);
+        $this->middleware('permission:success-store'   , ['only' => ['store']]);
+        $this->middleware('permission:success-edit'    , ['only' => ['edit']]);
+        $this->middleware('permission:success-update'  , ['only' => ['update']]);
+        $this->middleware('permission:success-destroy' , ['only' => ['destroy']]);
+    }
     public function index()
     {
         $successes = success::orderBy('created_at' , 'desc')->get();

@@ -13,7 +13,6 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('role' , ['admin' , 'user' , 'super_user'])->default('user');
             $table->integer('age');
             $table->bigInteger('tel')->nullable();
             $table->string('image')->nullable();

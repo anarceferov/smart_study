@@ -57,24 +57,20 @@
                         <th class="" title="{{$user->created_at}}">{{ $user->created_at->diffForHumans()}}</th>
                         @endif
                         <th>
-                            @if($user->status == 'admin')
-                            <div class="badge badge-warning">{{ $user->status}}</div>
-                            @elseif($user->status == 'user')
-                            <div class="badge badge-success">{{ $user->status}}</div>
-                            @elseif($user->status == 'super_user')
-                            <div class="badge badge-danger">{{ $user->status}}</div>
+                            @if(!empty($user->getRoleNames()))
+                            @foreach($user->getRoleNames() as $v)
+                                <span class="badge badge-success">{{ $v }}</span>
+                            @endforeach
                             @endif
                         </th>
                         <th class="align-middle">
-                            <a href="{{route('users.edit' , $user->id)}}" class="btn btn-info d-inline btn-sm"
-                                type="button"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="{{route('users.edit' , $user->id)}}" class="btn btn-info d-inline btn-sm" type="button"><i class="fas fa-pencil-alt"></i></a>
 
                             <form action="{{route('users.destroy' , $user->id )}}" method="post" class="d-inline">
                                 @csrf
                                 @method('delete')
 
-                                <button class="btn btn-danger btn-sm btn-circle" type="submit"><i
-                                        class="far fa-trash-alt"></i></button>
+                                <button class="btn btn-danger btn-sm btn-circle" type="submit"><i class="far fa-trash-alt"></i></button>
                             </form>
 
                         </th>
@@ -107,7 +103,7 @@
 <script src="{{asset('back/')}}/js/demo/datatables-demo.js"></script>
 
 <script>
-    setTimeout(function(){
+    setTimeout(function() {
 
         $(".alert").hide("2000")
 

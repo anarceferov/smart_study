@@ -8,6 +8,7 @@ use App\Models\Message;
 
 class MessageController extends Controller
 {
+    
     public function index()
     {
     //  $counts = Message::select('status' , DB::raw('count(*) as count'))->groupBy('status')->get();

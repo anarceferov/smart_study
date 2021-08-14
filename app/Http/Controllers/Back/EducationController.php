@@ -12,11 +12,17 @@ use App\Models\Education;
 
 class EducationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    function __construct()
+    {
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        $this->middleware('permission:education-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:education-create'  , ['only' => ['create']]);
+        $this->middleware('permission:education-store'   , ['only' => ['store']]);
+        $this->middleware('permission:education-edit'    , ['only' => ['edit']]);
+        $this->middleware('permission:education-update'  , ['only' => ['update']]);
+        $this->middleware('permission:education-destroy' , ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $educations = Education::orderBy('created_at' , 'desc')->get();

@@ -10,11 +10,17 @@ use App\Models\Course;
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    function __construct()
+    {
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        $this->middleware('permission:course-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:course-create'  , ['only' => ['create']]);
+        $this->middleware('permission:course-store'   , ['only' => ['store']]);
+        $this->middleware('permission:course-edit'    , ['only' => ['edit']]);
+        $this->middleware('permission:course-update'  , ['only' => ['update']]);
+        $this->middleware('permission:course-destroy' , ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $courses = Course::orderBy('created_at' , 'desc')->get();

@@ -2,24 +2,33 @@
 
 namespace App\Http\Controllers\Back;
 
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Models\Blog;
-use Illuminate\Http\Request;
 use App\Http\Requests\BlogCreateRequest;
 use App\Http\Requests\BlogUpdateRequest;
+use Illuminate\Support\Facades\Storage;
+
 
 class BlogController extends Controller
 {
 
+    function __construct()
+    {
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        $this->middleware('permission:blog-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:blog-create'  , ['only' => ['create']]);
+        $this->middleware('permission:blog-store'   , ['only' => ['store']]);
+        $this->middleware('permission:blog-edit'    , ['only' => ['edit']]);
+        $this->middleware('permission:blog-update'  , ['only' => ['update']]);
+        $this->middleware('permission:blog-destroy' , ['only' => ['destroy']]);
+    }
+
     public function index()
     {
-
-        $blogs = Blog::orderBy('created_at' , 'desc')->with('author')->get();
-
-        return view('back.blog.list' , compact('blogs'));
+        $blogs = Blog::orderBy('created_at', 'desc')->with('author')->get();
+        return view('back.blog.list', compact('blogs'));
     }
 
     public function create()
@@ -36,12 +45,11 @@ class BlogController extends Controller
         $blog->status = 'check';
         $blog->slug    = Str::slug($request->title);
 
-        if($request->hasFile('blog_image')){
+        if ($request->hasFile('blog_image')) {
 
             $file = $request->file('blog_image')->getClientOriginalName();
-            $request->file('blog_image')->storeAs('public/blog' , $file);
+            $request->file('blog_image')->storeAs('public/blog', $file);
             $blog->blog_image = $file;
-        
         }
 
 
@@ -57,22 +65,21 @@ class BlogController extends Controller
     public function edit($id)
     {
         $blogs = Blog::find($id);
-        return view('back.blog.edit' , compact('blogs'));
+        return view('back.blog.edit', compact('blogs'));
     }
 
     public function update(BlogUpdateRequest $request, $id)
     {
-        $blog=Blog::find($id) ?? abort(403, 'Blog not found');
+        $blog = Blog::find($id) ?? abort(403, 'Blog not found');
         $blog->title       = $request->title;
         $blog->content      = $request->content;
-        $blog->status        = $request->status; 
+        $blog->status        = $request->status;
 
-        if($request->hasFile('blog_image')){
+        if ($request->hasFile('blog_image')) {
 
             $file = $request->file('blog_image')->getClientOriginalName();
-            $request->file('blog_image')->storeAs('public/blog' , $file);
+            $request->file('blog_image')->storeAs('public/blog', $file);
             $blog->blog_image = $file;
-        
         }
 
         $blog->save();

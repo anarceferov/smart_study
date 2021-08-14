@@ -5,11 +5,20 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CountryCreateRequest;
 use App\Http\Requests\CountryUpdateRequest;
-use Illuminate\Http\Request;
 use App\Models\Country;
 
 class CountryController extends Controller
 {
+    function __construct()
+    {
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        $this->middleware('permission:country-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:country-create'  , ['only' => ['create']]);
+        $this->middleware('permission:country-store'   , ['only' => ['store']]);
+        $this->middleware('permission:country-edit'    , ['only' => ['edit']]);
+        $this->middleware('permission:country-update'  , ['only' => ['update']]);
+        $this->middleware('permission:country-destroy' , ['only' => ['destroy']]);
+    }
 
     public function index()
     {
