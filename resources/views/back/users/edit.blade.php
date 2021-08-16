@@ -60,6 +60,7 @@
                     <div class="form-group col-md-6">
                         <label for="">Password :</label>
                         <input type="password" name="password" id="" class="form-control" readonly onfocus="this.removeAttribute('readonly');">
+                        <input type="hidden">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="">Confirm Password :</label>
