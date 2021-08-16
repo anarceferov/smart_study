@@ -20,7 +20,7 @@
                 Geri</a>
         </div>
         <div class="card-body">
-            <form action="{{route('users.update' , $user->id)}}" method="POST" enctype="multipart/form-data" class="text-primary">
+            <form action="{{route('users.update' , $user->id)}}" method="POST" enctype="multipart/form-data" class="text-primary" autocomplete="off">
                 @method('PUT')
                 @csrf
                 <input type="hidden" name="id" id="" value="{{$user->id}}">
@@ -59,11 +59,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="">Password :</label>
-                        <input type="password" name="password" id="" class="form-control">
+                        <input type="password" name="password" id="" class="form-control" readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="">Confirm Password :</label>
-                        <input type="password" name="password_confirmation" id="" class="form-control">
+                        <input type="password" name="password_confirmation" id="" class="form-control" readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
                 <hr>

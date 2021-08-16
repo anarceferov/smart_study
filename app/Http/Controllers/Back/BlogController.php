@@ -8,27 +8,45 @@ use Illuminate\Support\Str;
 use App\Models\Blog;
 use App\Http\Requests\BlogCreateRequest;
 use App\Http\Requests\BlogUpdateRequest;
-use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class BlogController extends Controller
 {
 
     function __construct()
     {
-        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-        $this->middleware('permission:blog-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
-        $this->middleware('permission:blog-create'  , ['only' => ['create']]);
-        $this->middleware('permission:blog-store'   , ['only' => ['store']]);
-        $this->middleware('permission:blog-edit'    , ['only' => ['edit']]);
-        $this->middleware('permission:blog-update'  , ['only' => ['update']]);
-        $this->middleware('permission:blog-destroy' , ['only' => ['destroy']]);
+        Cache::flush();
+        $this->middleware('permission:blog-index', ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:blog-create', ['only' => ['create']]);
+        $this->middleware('permission:blog-store', ['only' => ['store']]);
+        $this->middleware('permission:blog-edit', ['only' => ['edit']]);
+        $this->middleware('permission:blog-update', ['only' => ['update']]);
+        $this->middleware('permission:blog-destroy', ['only' => ['destroy']]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = Blog::orderBy('created_at', 'desc')->with('author')->get();
+
+        // $blogs = Redis::connection();
+
+        // $blogs->set('blogs' ,  Blog::orderBy('created_at', 'desc')->with('author')->get());
+ 
+        // $blogs->get('blogs');
+        // session()->put('name' , 'Anar Ceferov');
+        // $tests = session()->get('name');
+        // return $tests;
+        $blogs = Cache::remember('blogs', 120 , function () {
+           return Blog::orderBy('created_at', 'desc')->with('author')->get();
+        });
+        // $blogs =  Blog::orderBy('created_at', 'desc')->with('author')->get();
+        // $blogs = Redis::set('blogs' , $blogs);
+        // $blogs = Redis::get($blogs);
+
         return view('back.blog.list', compact('blogs'));
+
+        // return view('back.blog.list', compact('blogs'));
     }
 
     public function create()

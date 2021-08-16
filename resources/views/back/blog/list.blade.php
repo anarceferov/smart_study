@@ -29,8 +29,9 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     @foreach ($blogs as $blog)
-                    <tr class="text-center"> 
+                    <tr class="text-center">
                         <th class="align-middle">
                             <div class="badge badge-pill badge-dark">
                                 {{$loop->iteration}}
@@ -38,7 +39,7 @@
                         </th>
 
                         <th class="align-middle">{{$blog->author->name}}</th>
-                        <th class="align-middle"><img src="{{asset('storage/blog/'.$blog->blog_image)}}" alt=""  width='200' height='150' class="img-thumbnail" style="object-fit: contain"></th>
+                        <th class="align-middle"><img src="{{asset('storage/blog/'.$blog->blog_image)}}" alt="" width='200' height='150' class="img-thumbnail" style="object-fit: contain"></th>
                         <th class="align-middle">{{Str::limit($blog->title , 40)}}</th>
                         <th class="align-middle">{{$blog->created_at}}</th>
                         <th class="align-middle">{{$blog->updated_at}}</th>
@@ -51,17 +52,15 @@
                             <div class="badge badge-danger">{{ $blog->status}}</div>
                             @endif
                         </th>
-                        
+
                         <th class="align-middle">
-                            <a href="{{route('blogs.edit' , $blog->id)}}" class="btn btn-info d-inline btn-sm"
-                                type="button"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="{{route('blogs.edit' , $blog->id)}}" class="btn btn-info d-inline btn-sm" type="button"><i class="fas fa-pencil-alt"></i></a>
 
                             <form action="{{route('blogs.destroy' , $blog->id )}}" method="post" class="d-inline">
                                 @csrf
                                 @method('delete')
 
-                                <button class="btn btn-danger btn-sm btn-circle" type="submit"><i
-                                        class="far fa-trash-alt"></i></button>
+                                <button class="btn btn-danger btn-sm btn-circle" type="submit"><i class="far fa-trash-alt"></i></button>
                             </form>
 
                         </th>
@@ -94,7 +93,7 @@
 <script src="{{asset('back/')}}/js/demo/datatables-demo.js"></script>
 
 <script>
-    setTimeout(function(){
+    setTimeout(function() {
 
         $(".alert").hide("2000")
 

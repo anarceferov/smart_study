@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Back;
 use App\Http\Requests\SuccessCreateRequest;
 use App\Http\Requests\SuccessUpdateRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Success;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class SuccessController extends Controller
 {
@@ -22,7 +23,16 @@ class SuccessController extends Controller
     }
     public function index()
     {
-        $successes = success::orderBy('created_at' , 'desc')->get();
+
+        // $successes = Redis::connection();
+
+        // $successes->set('successes' ,  success::orderBy('created_at' , 'desc')->get());
+ 
+        // $successes->get('successes');
+
+        $successes = Cache::remember('successes', 120 , function () {
+           return success::orderBy('created_at' , 'desc')->get();
+        });
         return view('back.success.list' , compact('successes'));
     }
 

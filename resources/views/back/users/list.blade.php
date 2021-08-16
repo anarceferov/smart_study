@@ -28,7 +28,7 @@
                         <th>User Image</th>
                         <th>Job</th>
                         <th>Start</th>
-                        <th>Type</th>
+                        <th>Role</th>
                         <th>Crud</th>
                     </tr>
                 </thead>
