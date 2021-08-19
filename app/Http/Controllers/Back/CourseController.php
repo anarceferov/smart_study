@@ -13,7 +13,7 @@ class CourseController extends Controller
     function __construct()
     {
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-        $this->middleware('permission:course-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:course-index'   , ['only' => ['index']]);
         $this->middleware('permission:course-create'  , ['only' => ['create']]);
         $this->middleware('permission:course-store'   , ['only' => ['store']]);
         $this->middleware('permission:course-edit'    , ['only' => ['edit']]);

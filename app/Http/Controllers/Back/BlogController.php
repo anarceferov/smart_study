@@ -18,7 +18,7 @@ class BlogController extends Controller
     function __construct()
     {
         Cache::flush();
-        $this->middleware('permission:blog-index', ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:blog-index', ['only' => ['index']]);
         $this->middleware('permission:blog-create', ['only' => ['create']]);
         $this->middleware('permission:blog-store', ['only' => ['store']]);
         $this->middleware('permission:blog-edit', ['only' => ['edit']]);

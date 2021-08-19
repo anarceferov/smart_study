@@ -13,7 +13,7 @@ class ServiceController extends Controller
     function __construct()
     {
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-        $this->middleware('permission:service-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:service-index'   , ['only' => ['index']]);
         $this->middleware('permission:service-create'  , ['only' => ['create']]);
         $this->middleware('permission:service-store'   , ['only' => ['store']]);
         $this->middleware('permission:service-edit'    , ['only' => ['edit']]);

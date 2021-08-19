@@ -16,26 +16,18 @@ class UserController extends Controller
     function __construct()
     {
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-        $this->middleware('permission:user-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
-        $this->middleware('permission:user-create'  , ['only' => ['create']]);
-        $this->middleware('permission:user-store'   , ['only' => ['store']]);
-        $this->middleware('permission:user-edit'    , ['only' => ['edit']]);
-        $this->middleware('permission:user-update'  , ['only' => ['update']]);
-        $this->middleware('permission:user-destroy' , ['only' => ['destroy']]);
+        $this->middleware('permission:user-index', ['only' => ['index']]);
+        $this->middleware('permission:user-create', ['only' => ['create']]);
+        $this->middleware('permission:user-store', ['only' => ['store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit']]);
+        $this->middleware('permission:user-update', ['only' => ['update']]);
+        $this->middleware('permission:user-destroy', ['only' => ['destroy']]);
     }
 
 
     public function index()
     {
-        // $permissions = ['user-index' , 'user-create' , 'user-store' , 'user-edit' , 'user-update' , 'user-destroy'];
-        // foreach($permissions as $per){
-        //     $pers = New Permission;
-        //     $pers->name = $per;
-        //     $pers->guard_name = 'web';
-        //     $pers->save();
-        // }
-        
-        $users = User::all();
+        $users = User::with('roles')->get();
         return view('back.users.list', compact('users'));
     }
 
@@ -66,7 +58,7 @@ class UserController extends Controller
             $user->image = $file;
         }
         $user->save();
-        
+
 
         $role = Role::create(['name' => $request->input('name')]);
 
@@ -124,15 +116,12 @@ class UserController extends Controller
         $user->save();
 
         $role = Role::find($id);
+
         $role->update(['name' => $request->input('name')]);
 
-        if($request->permission){
-            $role->syncPermissions($request->input('permission'));
-            $role->save();
-        }else{
-            DB::table("model_has_permissions")->where('model_id', $user->id)->delete();
-        }
+        $role->syncPermissions($request->input('permission'));
 
+        DB::table("model_has_permissions")->where('model_id', $user->id)->delete();
 
         return redirect()->route('users.index')->withSuccess('User update');
     }

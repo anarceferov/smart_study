@@ -15,7 +15,7 @@ class EducationController extends Controller
     function __construct()
     {
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-        $this->middleware('permission:education-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:education-index'   , ['only' => ['index']]);
         $this->middleware('permission:education-create'  , ['only' => ['create']]);
         $this->middleware('permission:education-store'   , ['only' => ['store']]);
         $this->middleware('permission:education-edit'    , ['only' => ['edit']]);

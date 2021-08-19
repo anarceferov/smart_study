@@ -99,12 +99,10 @@
                 <div class="form-group">
                     <button class="btn btn-secondary btn-sm">Select ALL</button>
                 </div>
-                
-                <div class="form-check">
+
+                <div class="form-check bg-light">
                     @foreach($permission as $value)
-                    <input type="checkbox" value="{{$value->name}}" class="form-check-input" id="{{ $value->id }}" name="permission[]" @foreach($rolePermissions as $key=>$per)
-                    @if($key == $value->id) checked @endif
-                    @endforeach">
+                    <input type="checkbox" value="{{$value->name}}" class="form-check-input" id="{{ $value->id }}" name="permission[]" @foreach($rolePermissions as $key=>$per) @if($key == $value->id) checked @endif @endforeach>
                     <label class="form-check-label" for="{{ $value->id }}" value=""> {{ $value->name }} </label>
                     <br>
                     @endforeach
@@ -124,12 +122,12 @@
 @endsection
 
 @section('css')
-    <style>
-        hr{
-            background-color: red !important;
-            border: 1px solid black;
-        }
-    </style>
+<style>
+    hr {
+        background-color: red !important;
+        border: 1px solid black;
+    }
+</style>
 @endsection
 
 @section('js')
@@ -137,9 +135,9 @@
 
 
 <script>
-$('.btn-secondary').click(function(e){
-    e.preventDefault()
-    $('.form-check-input').prop('checked', true);
-})
+    $('.btn-secondary').click(function(e) {
+        e.preventDefault()
+        $('.form-check-input').prop('checked', true);
+    })
 </script>
 @endsection

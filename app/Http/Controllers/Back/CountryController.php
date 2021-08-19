@@ -12,7 +12,7 @@ class CountryController extends Controller
     function __construct()
     {
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-        $this->middleware('permission:country-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:country-index'   , ['only' => ['index']]);
         $this->middleware('permission:country-create'  , ['only' => ['create']]);
         $this->middleware('permission:country-store'   , ['only' => ['store']]);
         $this->middleware('permission:country-edit'    , ['only' => ['edit']]);

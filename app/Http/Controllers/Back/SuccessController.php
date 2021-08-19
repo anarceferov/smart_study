@@ -14,7 +14,7 @@ class SuccessController extends Controller
     function __construct()
     {
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-        $this->middleware('permission:success-index'   , ['only' => ['index']]) ?? abort('Icaze Yoxdu');
+        $this->middleware('permission:success-index'   , ['only' => ['index']]);
         $this->middleware('permission:success-create'  , ['only' => ['create']]);
         $this->middleware('permission:success-store'   , ['only' => ['store']]);
         $this->middleware('permission:success-edit'    , ['only' => ['edit']]);
